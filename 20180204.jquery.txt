@@ -1,0 +1,34 @@
+jQuery.com
+youmightnotneedjquery.com
+
+include jQuery on webpage - cdnjs jquery
+
+1. selector
+$()
+  - css style selector: "img", ".class", "#id", and "li a"
+  - result is a collection: access element: $("img:first"), $("img:nth-child(3)")
+.css()
+
+2. methods
+http://api.jquery.com
+.text()
+.html()
+.attr()  type: text, color, ...
+.val()
+.addClass(), .removeClass(), toggleClass()
+
+3. effects
+.fadeOut()    .fadeIn()   .fadeToggle()
+.slideDown()  .slideUp()  .slideToggle()
+
+4. events
+.click()
+.keypress()
+.on()
+
+5. ajax
+.get()
+.getJSON()
+.load()
+.post()
+// https://api.github.com/zen

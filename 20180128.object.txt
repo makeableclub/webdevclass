@@ -1,0 +1,69 @@
+Javascript Object
+Object-oriented Programming: encapsulation, inheritance
+
+// Array
+var person1 = ["Raymond", 33, "Walnut Creek"]
+var person2 = ["Yuhua", "Walnut Creek", 38]
+
+// Object
+var person = {
+    name: "Raymond",
+    age: 33,
+    city: "Walnut Creek"
+};
+
+array vs. object:
+array has strict order; while object is key-value pairs
+
+// access object property:
+person.name - dot notation
+person["name"]  - has better tolerance in name:  "start with number", variable, space in name
+
+Object initialization:
+// option 1
+var person = {};
+person.name = "raymond"
+
+var person = {
+    name: "raymond",
+    age: 23
+};
+
+// option 2
+var person = new Object();
+person.name = "raymond"
+
+// option 3
+// constructor - class
+function Person() {
+  this.name = "person";
+  this.age = 0;
+  this.race = "";
+}
+Person.prototype.greeting = function() {
+  console.log("Hello, I am " + this.name);
+}
+
+var pObj = new Person();
+
+Object.keys(); values(); entries();
+prototypes
+
+
+JSON - JavaScript Object Notation
+data serialization for passing JSON message over the Internet
+JSON.stringify();
+JSON.parse()
+
+For example, a project web page to be expressed as:
+var webpage = {
+  title: "An IoT Wand",
+  description: "describe project details here",
+  steps:
+      ["step 1 - xxxxxx",
+       "step 2 - yyyyyy"]
+  pictures: [
+      {"pic 1 title", "image/pic1.jpg"},
+      {"pic 2 title", "image/pic2.jpg"}
+  ]
+}

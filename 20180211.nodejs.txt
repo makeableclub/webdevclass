@@ -1,0 +1,63 @@
+1. install Node.js, check "node -v"
+2. create a project directory, and "npm init"
+3. install some package
+npm install -g nodemon
+npm install express --save
+npm install body-parser --save
+npm install mongoose --save
+
+
+4. index.js
+
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 3001;
+
+app.get('/', function(req, res){
+    res.send("Hello world!");
+});
+
+app.get('/star', function(req, res){
+    res.send("Starlet");
+    // res.json({});
+});
+
+// process.env.PORT,
+app.listen( port, function(){
+    console.log("App is runnig at 3001");
+});
+
+/// Zen program
+var sentences = [
+  "makeable club",
+  "use common sense",
+  "practice makes perfection",
+  "do your job, so I can do my job"
+];
+
+app.get('/zen', function(req, res) {
+    var random = Math.random(0, 1);
+    var idx = Math.floor( random * sentences.length-1);
+    var sentence = sentences[idx];
+    res.send()
+});
+
+
+
+/// POSTMAN
+
+/// MongoDB
+sudo apt-get install -y mongodb-org
+
+
+
+mkdir data
+
+echo 'mongod --dbpath=data --nojournal --rest
+--httpinterface "$@"' > mongod.sh
+
+chmod a+x mongod.sh
+./mongod.sh
+
+
+mongo

@@ -1,0 +1,52 @@
+npm install mongoose --save
+
+
+/// MongoDB
+sudo apt-get install -y mongodb-org
+
+mkdir data
+
+echo 'mongod --dbpath=data --nojournal --rest
+--httpinterface "$@"' > mongod.sh
+
+chmod a+x mongod.sh
+./mongod.sh
+
+
+/// Mongo Management Studio
+
+models/index.js
+var mongoose = require('mongoose');
+mongoose.set('debug', true);
+mongoose.connect('mongodb://localhost/task-api');
+mongoose.Promise = Promise;
+module.exports.Task = require('./task');
+
+
+models/task.js
+var mongoose = require('mongoose');
+var taskSchema = new mongoose.Schema({
+    name: { type: String,
+            required: 'Task name is required'
+        },
+    completed: {
+            type: Boolean,
+            default: false
+        },
+    created_date: {
+            type: Date,
+            default: Date.now
+        }
+});
+
+var Task = mongoose.model('Task', todoSchema);
+module.exports = Task;
+
+
+
+/// Routes - CRUD: Create, Read, Update, Delete
+GET     /api/tasks
+POST    /api/tasks
+GET     /api/task/:taskId
+PUT     /api/task/:taskId
+DELETE  /api/task/:taskId

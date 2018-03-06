@@ -1,0 +1,22 @@
+Javascript Basic - 20180107
+
+0. node CLI, or JS console
+
+1. Primitive data types
+number: 1, -3, 4.5
+string: "hello", "nice to meet you"
+boolean: true, false
+null / undefined
+
+2. Variables
+variable: declare, assignment
+assignment: =
+operators: +, -, *, /, %
+comparison: >, >=, ==, !=, ===, !==
+
+3. Conditional flow
+if - else if - else
+loop:  while, for
+
+4. Guess game
+develop a code to guess a number between 1 and 100
