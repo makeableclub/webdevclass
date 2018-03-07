@@ -4,7 +4,7 @@ npm install mongoose --save
 /// MongoDB
 sudo apt-get install -y mongodb-org
 
-mkdir data
+mkdir data 
 
 echo 'mongod --dbpath=data --nojournal --rest
 --httpinterface "$@"' > mongod.sh
