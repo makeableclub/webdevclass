@@ -16,7 +16,13 @@ class TaskList extends Component {
 
   loadTasks() {
     fetch(APIURL)
-    .then(data => data.json())
+    .then(response => {
+      if (!response.ok) {
+        let error = {errorMessage: "Failed to get response from server"};
+        throw error;
+      }
+      return response.json()
+    })
     .then(tasks => this.setState({tasks}))
     .catch(error => console.log(error));
   }
@@ -35,13 +41,52 @@ class TaskList extends Component {
     .catch(error => console.log(error));
   }
 
+  deleteTask(id) {
+    const deleteURL = APIURL + "/" + id;
+    fetch(deleteURL, {
+      method: "delete"
+    })
+    .then(() => {
+      const newlist = this.state.tasks.filter( task => task._id !== id );
+      this.setState({tasks: newlist});
+    });
+  }
+
+  toggleTask(task) {
+    const updateURL = APIURL + "/" + task._id;
+    console.log("toggleTask: ", task._id, task.completed);
+
+    fetch(updateURL, {
+      method: "put",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({completed: !task.completed})
+    })
+    .then(data => data.json())
+    .then( updatedTask => {
+      console.log("updatedTask: ", updatedTask._id, updatedTask.completed);
+
+      const tasks = this.state.tasks.map( task =>
+        (task._id === updatedTask._id)? {...task, completed: !task.completed} : task
+      );
+      this.setState({tasks: tasks});
+    });
+  }
+
+
   componentWillMount() {
     this.loadTasks();
   }
 
   render() {
     const taskItems = this.state.tasks.map((task) => (
-      <TaskItem key={task._id} {...task}/>
+      <TaskItem
+        key={task._id}
+        {...task}
+        onDelete={this.deleteTask.bind(this, task._id)}
+        onToggle={this.toggleTask.bind(this, task)}
+      />
     ));
 
     return (
@@ -57,3 +102,10 @@ class TaskList extends Component {
 }
 
 export default TaskList
+
+/** TODO: refactor network call to another helper files
+async loadTasks() {
+  let tasks = await Helper.getTasks();
+  this.setState({tasks};
+}
+*/

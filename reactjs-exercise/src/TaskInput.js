@@ -3,7 +3,7 @@ import React, {Component} from "react";
 class TaskInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {inputValue: "whatever"};
+    this.state = {inputValue: "do something fun"};
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
