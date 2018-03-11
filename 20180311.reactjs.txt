@@ -1,0 +1,22 @@
+npm install -g create-react-app
+create-react-app reactjs-exercise
+cd reactjs-exercise
+npm start
+https://reactjs.org/tutorial/tutorial.html
+
+0. install React plugin in Chrome
+1. check the stock page, and modify it
+2. replace with <TaskList/>
+3. write TaskList Component, and test
+4. init constructor
+5. load TaskList  -> error: wrong port
+6. set proxy, and restart react-server "npm start"
+https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#proxying-api-requests-in-development
+7. check React tab
+8. add TaskItem
+9. use TaskItem in TaskList
+10. reflect the "completed" state
+11. add TaskInput
+12. functionality of TaskInput - onChange()
+13. Add button - onClick(), do a console log
+14. addTask in TaskList
