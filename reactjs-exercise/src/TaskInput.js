@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import "./App.css";
 
 class TaskInput extends Component {
   constructor(props) {
@@ -22,13 +23,13 @@ class TaskInput extends Component {
   render() {
       return (
         <div>
-          <input
+          <input className="taskInput"
             type="text"
             value={this.state.inputValue}
             onChange={this.handleChange}>
           </input>
 
-          <button
+          <button className="addButton"
             onClick={this.handleClick}>
             Add
           </button>

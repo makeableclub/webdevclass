@@ -2,3 +2,7 @@
 */node_modules/
 */*/node_modules/
 schedule.txt
+.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+

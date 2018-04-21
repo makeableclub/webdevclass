@@ -1,6 +1,7 @@
-import React, {Component} from "react";
-import TaskItem from "./TaskItem";
-import TaskInput from "./TaskInput";
+import React, { Component } from 'react';
+import TaskItem from './TaskItem';
+import TaskInput from './TaskInput';
+import "./App.css";
 
 const APIURL = "/api/tasks";
 
@@ -8,48 +9,51 @@ class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks:[]
+      tasks: []
     };
-
     this.addTask = this.addTask.bind(this);
   }
 
   loadTasks() {
-    fetch(APIURL)
-    .then(response => {
-      if (!response.ok) {
-        let error = {errorMessage: "Failed to get response from server"};
-        throw error;
-      }
-      return response.json()
-    })
-    .then(tasks => this.setState({tasks}))
-    .catch(error => console.log(error));
-  }
+      fetch(APIURL)
+      .then(response => {
+        if (!response.ok) {
+          let error = {errorMessage: "Failed to get response from server"};
+          throw error;
+        }
+        return response.json()
+      })
+      .then(tasks => this.setState({tasks}))
+      .catch(error => console.log(error));
+    }
 
-  addTask(taskName) {
-    console.log("In TaskList: ", taskName);
-    fetch(APIURL, {
-      method: "post",
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-      body: JSON.stringify({name: taskName})
-    })
-    .then(data => data.json())
-    .then(newTask => this.setState({tasks: [...this.state.tasks, newTask]}))
-    .catch(error => console.log(error));
-  }
+    addTask(taskName) {
+      console.log("In TaskList: ", taskName);
+      fetch(APIURL, {
+        method: "post",
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({name: taskName})
+      })
+      .then(data => data.json())
+      .then(newTask => {
+        console.log("new data: " + newTask);
+        this.setState({tasks: [...this.state.tasks, newTask]})})
+      .catch(error => console.log("error: " + error));
+    }
+
 
   deleteTask(id) {
-    const deleteURL = APIURL + "/" + id;
-    fetch(deleteURL, {
-      method: "delete"
-    })
-    .then(() => {
-      const newlist = this.state.tasks.filter( task => task._id !== id );
-      this.setState({tasks: newlist});
-    });
+      // event.stopPropagation();
+      const deleteURL = APIURL + "/" + id;
+      fetch(deleteURL, {
+        method: "delete"
+      })
+      .then(() => {
+        const newlist = this.state.tasks.filter( task => task._id !== id );
+        this.setState({tasks: newlist});
+      });
   }
 
   toggleTask(task) {
@@ -74,26 +78,34 @@ class TaskList extends Component {
     });
   }
 
-
   componentWillMount() {
     this.loadTasks();
   }
 
   render() {
+    console.log(this.state.tasks);
+
     const taskItems = this.state.tasks.map((task) => (
-      <TaskItem
-        key={task._id}
-        {...task}
-        onDelete={this.deleteTask.bind(this, task._id)}
-        onToggle={this.toggleTask.bind(this, task)}
-      />
-    ));
+        <TaskItem
+          key={task._id}
+          {...task}
+          onToggle={this.toggleTask.bind(this, task)}
+          onDelete={this.deleteTask.bind(this, task._id)}
+        />
+      ));
 
     return (
       <div>
-        <h1>TaskList</h1>
+        <header>
+          <h1>Tasks by <span>React.js</span></h1>
+          <h2>A single page application for learning React.js</h2>
+        </header>
+
+        <section className="form">
         <TaskInput addTask={this.addTask}/>
-        <ul>
+        </section>
+        
+        <ul class="list">
           {taskItems}
         </ul>
       </div>
@@ -101,11 +113,4 @@ class TaskList extends Component {
   }
 }
 
-export default TaskList
-
-/** TODO: refactor network call to another helper files
-async loadTasks() {
-  let tasks = await Helper.getTasks();
-  this.setState({tasks};
-}
-*/
+export default TaskList;

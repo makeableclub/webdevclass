@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import TaskList from './TaskList';
 import './App.css';
+import TaskList from "./TaskList";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tasks: []
-    }
-  }
-
   render() {
     return (
-      <div className="App">
+      <div>
         <TaskList/>
       </div>
     );

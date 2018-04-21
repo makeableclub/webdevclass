@@ -8,5 +8,4 @@ ReactJS -> Facebook
 
 tic-tac-toe game
 
-ReactJS component
-UI Component - UI breakdown
+Continue the Tic-Tac-Toe game, lifting state to Game level
