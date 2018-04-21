@@ -1,9 +1,14 @@
-var express = require('express');
-var app = express();
-var port = process.env.PORT || 3001;
+require("dotenv").config();
+const express = require('express');
+const app = express();
+// const cors = require("cors");
+const bodyParser = require('body-parser');
+// const errorHandler = require("./handlers/error");
 
-var bodyParser = require('body-parser');
+const port = process.env.PORT || 3001;
 
+// app.use(cors());
+// app.use(errorHandler);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -14,6 +19,20 @@ app.get('/', function(req, res){
     res.send("Hello world, from Node.js app.");
     // res.sendFile("index.html");
 });
+
+
+const taskRoutes = require('./routes/tasks');
+app.use('/api/tasks', taskRoutes);
+
+const authRoutes = require("./routes/auth");
+app.use("/api/auth", authRoutes);
+
+// process.env.PORT,
+app.listen( port, function(){
+    console.log("App is runnig at " + port);
+});
+
+
 
 /// Zen program
 var sentences = [
@@ -30,13 +49,4 @@ app.get('/zen', function(req, res) {
 
     var sentence = sentences[idx];
     res.send(sentence);
-});
-
-
-var taskRoutes = require('./routes/tasks');
-app.use('/api/tasks', taskRoutes);
-
-// process.env.PORT,
-app.listen( port, function(){
-    console.log("App is runnig at 3001");
 });
