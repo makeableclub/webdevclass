@@ -19,7 +19,13 @@ const userSchema = new mongoose.Schema({
     },
     profileImageUrl: {
         type: String
-    }
+    },
+    tasks: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Task"
+        }
+    ]
 });
 
 // encrypt password field

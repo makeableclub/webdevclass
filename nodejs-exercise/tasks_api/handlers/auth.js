@@ -12,9 +12,8 @@ exports.signin = async function(req, res, next){
     console.log(user);
     console.log(req.body.password);
 
-    let { id, username, profileImageUrl } = user;
+    let { id, username, password, profileImageUrl } = user;
     let matched = await user.comparePassword(req.body.password);
-
     console.log( "matched? " + matched );
 
     if( matched ) {
@@ -29,6 +28,7 @@ exports.signin = async function(req, res, next){
         return res.status(200).json({
             id,
             username,
+            password,
             profileImageUrl,
             token
         });
@@ -52,7 +52,11 @@ exports.signup = async function(req, res, next){
     try {
         // create user
         let user = await db.User.create(req.body);
+
         let {id, username, profileImageUrl } = user;
+
+        console.log(username);
+        console.log(process.env.SECRET_KEY);
 
         // create token
         let token = jwt.sign(

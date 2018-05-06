@@ -1,8 +1,14 @@
 var express = require('express');
-var router = express.Router();
-// var db = require('../models');
+
+// var router = express.Router();
+// need to specify "mergeParams"
+var router = express.Router({ mergeParams: true });
 
 var handler = require("../handlers/tasks.js")
+
+
+// use prefix:  /api/users/:id/tasks
+
 
 // /api/tasks
 router.route('/')

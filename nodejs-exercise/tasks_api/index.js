@@ -22,7 +22,11 @@ app.get('/', function(req, res){
 
 
 const taskRoutes = require('./routes/tasks');
+// old prefix
 app.use('/api/tasks', taskRoutes);
+
+// use new prefix:  /api/users/:id/tasks
+app.use('/api/users/:id/tasks', taskRoutes);
 
 const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
