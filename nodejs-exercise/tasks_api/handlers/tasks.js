@@ -1,21 +1,6 @@
 var db = require('../models');
 
-// Refactor ./routes/tasks.js
-/*
-router.get('/', function(req, res){
-    // res.send("From task routes");
-    db.Task.find()
-    .then(function(tasks){
-      console.log(tasks);
-      res.send(tasks);
-    })
-    .catch(function(err){
-      res.send(err);
-    })
-});
-*/
-
-exports.getTasks = function(req, res) {
+exports.getTasks_old = function(req, res) {
   db.Task.find()
   .then(function(tasks){
     console.log(tasks);
@@ -26,17 +11,17 @@ exports.getTasks = function(req, res) {
   })
 }
 
-/*
-router.post('/', function(req, res){
-    db.Task.create(req.body)
-    .then(function(newtask){
-      res.status(201).json(newtask);
-    })
-    .catch(function(err){
-      res.send(err);
-    })
-});
-*/
+exports.getTasks = async function(req, res, next) {
+    try {
+        let tasks = await db.Task.find({
+            user: req.params.id
+        });
+        return res.status(200).json(tasks);
+    }
+    catch(err) {
+        next(err);
+    }
+}
 
 exports.createTask_old = function(req, res) {
   db.Task.create(req.body)
@@ -77,17 +62,6 @@ exports.createTask = async function(req, res, next) {
 
 
 //   /api/tasks/:taskId
-/*
-router.get('/:taskId', function(req, res){
-    db.Task.findById(req.params.taskId)
-    .then(function(task){
-      res.send(task);
-    })
-    .catch(function(err){
-      res.send(err);
-    })
-});
-*/
 exports.getTask_old = function(req, res){
     db.Task.findById(req.params.taskId)
     .then(function(task){
