@@ -1,5 +1,6 @@
 var db = require('../models');
 
+/*
 exports.getTasks_old = function(req, res) {
   db.Task.find()
   .then(function(tasks){
@@ -10,7 +11,7 @@ exports.getTasks_old = function(req, res) {
     res.send(err);
   })
 }
-
+*/
 exports.getTasks = async function(req, res, next) {
     try {
         let tasks = await db.Task.find({
@@ -23,6 +24,7 @@ exports.getTasks = async function(req, res, next) {
     }
 }
 
+/*
 exports.createTask_old = function(req, res) {
   db.Task.create(req.body)
   .then(function(newtask){
@@ -32,7 +34,7 @@ exports.createTask_old = function(req, res) {
     res.send(err);
   })
 }
-
+*/
 
 // /api/users/:id/tasks
 exports.createTask = async function(req, res, next) {
@@ -43,6 +45,8 @@ exports.createTask = async function(req, res, next) {
             user: req.params.id
         });
 
+        console.log("userid: " + req.params.id);
+        
         let taskOwner = await db.User.findById(req.params.id);
         taskOwner.tasks.push(task.id);
         await taskOwner.save();
@@ -60,7 +64,7 @@ exports.createTask = async function(req, res, next) {
     }
 }
 
-
+/*
 //   /api/tasks/:taskId
 exports.getTask_old = function(req, res){
     db.Task.findById(req.params.taskId)
@@ -71,7 +75,7 @@ exports.getTask_old = function(req, res){
       res.send(err);
     })
 };
-
+*/
 
 // /api/users/:id/tasks/:taskId
 exports.getTask = async function(req, res, next) {
@@ -84,18 +88,40 @@ exports.getTask = async function(req, res, next) {
     }
 }
 
-exports.updateTask = function(req, res){
+// /api/users/:id/tasks/:taskId
+exports.updateTask = async function(req, res){
+    try {
+        console.log("update: " + req.params.taskId);
+
+        let task = await db.Task.findOneAndUpdate(
+              {_id: req.params.taskId},
+              req.body,
+              {new: true});
+
+        console.log("update: " + task);
+        return res.status(200).json(task);
+    }
+    catch(err) {
+        console.log("update: " + err);
+        next(err);
+    }
+};
+
+exports.updateTask_old = function(req, res){
     db.Task.findOneAndUpdate(
       {_id: req.params.taskId},
       req.body,
       {new: true})
     .then(function(task){
+        console.log("update: " + task);
       res.json(task);
     })
     .catch(function(err){
+        console.log("update: " + err);
       res.send(err);
     })
 };
+
 
 exports.deleteTask = function(req, res){
     db.Task.remove({_id: req.params.taskId})

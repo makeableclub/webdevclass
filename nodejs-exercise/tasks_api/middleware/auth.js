@@ -39,14 +39,14 @@ exports.requireCorrectUser = function(req, res, next) {
 
             // sorry
             return next({
-                status: 401,
+                status: 403,
                 message: "Unauthorized to perform action"
             });
         });
     }
     catch(err) {
         return next({
-            status: 401,
+            status: 403,
             message: "Error: Unauthorized to perform action"
         });
     }

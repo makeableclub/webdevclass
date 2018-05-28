@@ -19,7 +19,7 @@ app.use(express.static(__dirname + '/public'));
 
 const taskRoutes = require('./routes/tasks');
 // old prefix
-app.use('/api/tasks', taskRoutes);
+// app.use('/api/tasks', requireLogin, taskRoutes);
 // use new prefix:  /api/users/:id/tasks
 app.use('/api/users/:id/tasks', requireLogin, requireCorrectUser, taskRoutes);
 // app.use('/api/users/:id/tasks', taskRoutes);

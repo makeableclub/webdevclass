@@ -71,3 +71,10 @@ li span {
 li span:hover {
   color: #e74c3c
 }
+
+.hidden {
+  display: none;
+}
+.shown {
+  display: block;
+}
