@@ -18,21 +18,16 @@ $(document).ready(function(){
 
   // setup BASE_URL and HEADERS for all requests done in this scope
   TASKS_API.BASE_URL = "/api/users/"+userid+"/tasks/";
+
   $.ajaxSetup({
       headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + token
       }
   });
+
+
   // 1. load tasks from MongodDB
-  /*
-  $.getJSON( TASKS_API_BASE_URL + "/tasks")
-  .then(addTasks)
-  .catch(function(err){
-    console.log("Error on page: " + err.status);
-    window.location.href = "/login.html";
-  });
-  */
   $.ajax({
     method: 'GET',
     url: TASKS_API.BASE_URL
@@ -42,8 +37,6 @@ $(document).ready(function(){
     console.log(err);
     window.location.href = "/login.html";
   });
-
-
 
   // 2. create a new task!
   $('#taskInput').keypress(function(event){
@@ -92,10 +85,10 @@ function addTask(task) {
     newItem.addClass("done");
   }
   $('.list').append(newItem);
+
+  // remove the content in the input box
+  $('#taskInput').val('');
 }
-
-
-
 
 function createTask() {
   var taskName = $('#taskInput').val();
@@ -124,8 +117,6 @@ function updateTask(task) {
   var clickedId = task.data("id");
   var isDone = task.data('completed');
 
-  console.log("clickID: " + clickedId);
-
   var updateUrl = TASKS_API.BASE_URL + clickedId;
   var updateData = {"completed": !isDone};
 
@@ -135,7 +126,6 @@ function updateTask(task) {
     data: JSON.stringify(updateData)
   })
   .then(function(updatedData){
-    // console.log("updated: ", updatedData);
     task.toggleClass('done');
     task.data('completed', !isDone);
   })
@@ -145,10 +135,9 @@ function updateTask(task) {
 }
 
 function removeTask(task) {
-  console.log("span is clicked");
   // var clickedId = $(this).parent().data("id");
   var clickedId = task.data("id");
-  console.log(clickedId);
+  // console.log(clickedId);
   // $(this).parent().remove();  // -- UI side
 
   var deletedUrl = TASKS_API.BASE_URL + clickedId;

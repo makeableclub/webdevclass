@@ -8,5 +8,4 @@ function loadView(view) {
 
 // Content
 module.exports.index    = loadView('index');      // default page
-module.exports.login    = loadView('login');      // only show if JWT valid
-// module.exports.fail     = loadView('fail');       // auth fail
+module.exports.login    = loadView('login');      // login form page

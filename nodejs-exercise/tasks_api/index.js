@@ -22,7 +22,6 @@ const taskRoutes = require('./routes/tasks');
 // app.use('/api/tasks', requireLogin, taskRoutes);
 // use new prefix:  /api/users/:id/tasks
 app.use('/api/users/:id/tasks', requireLogin, requireCorrectUser, taskRoutes);
-// app.use('/api/users/:id/tasks', taskRoutes);
 
 const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
