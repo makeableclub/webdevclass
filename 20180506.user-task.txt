@@ -1,0 +1,27 @@
+signup / signin
+
+http://localhost:3001/api/auth/signin
+POSTMAN - BODY: raw, JSON(application/json)
+{
+	"username": "rxie",
+	"password": "rxie",
+	"email": "yuhua.xie@gmail.com"
+}
+
+
+
+
+18. password encryption
+bcrypt
+
+19. code refactor, tidy up routes/tasks.js, extract logic to handlers
+
+
+20. user task association
+in models/task.js, add user reference
+in models/user.js, add an array of tasks
+in models/index.js, export both
+
+21. use POSTMAN to
+add task, under a user;
+list a task under a user;

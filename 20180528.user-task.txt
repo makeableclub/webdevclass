@@ -1,0 +1,14 @@
+http://localhost:3001/api/auth/signin
+POSTMAN - BODY: raw, JSON(application/json)
+{
+	"username": "rxie",
+	"password": "rxie",
+	"email": "yuhua.xie@gmail.com"
+}
+
+
+25. add user interface for login, signup; also add "logout" button
+
+26. add login.js, signup.js, etc to handle user credential and persists in sessionStorage
+
+27. refactor code to utilize and enforce the credentials.

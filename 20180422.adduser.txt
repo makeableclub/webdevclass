@@ -1,0 +1,25 @@
+npm install -g create-react-app
+
+create-react-app reactjs-exercise
+cd reactjs-exercise
+npm start
+https://reactjs.org/tutorial/tutorial.html
+
+
+
+16. add user
+user model
+
+17. user login, and JWT json web token
+dotenv and SECRET_KEY
+
+-------
+
+
+18. password encryption
+
+
+19. user task association
+
+
+20. add user login interface

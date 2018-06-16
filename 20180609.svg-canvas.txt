@@ -1,0 +1,16 @@
+HTML Graphics: Drawing on Webpage
+
+1. Image: Raster, Vector
+
+2. Canvas vs. SVG
+https://www.sitepoint.com/canvas-vs-svg-choosing-the-right-tool-for-the-job/
+
+3. HTML Canvas
+https://www.w3schools.com/html/html5_canvas.asp
+
+4. HTML SVG
+https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial
+https://www.w3schools.com/html/html5_svg.asp
+
+5. HTML Google Map
+https://www.w3schools.com/html/html_googlemaps.asp

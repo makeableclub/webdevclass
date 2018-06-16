@@ -1,0 +1,22 @@
+signup / signin
+
+http://localhost:3001/api/auth/signin
+POSTMAN - BODY: raw, JSON(application/json)
+{
+	"username": "rxie",
+	"password": "rxie",
+	"email": "yuhua.xie@gmail.com"
+}
+
+
+
+
+22. Enforce user check (requireLogin)
+
+
+23. APIs
+list all tasks that belong to a user;
+update a particular task
+delete a task, also need to remove reference of task id in the user record
+
+24. Refactor code to use "async function" and "await"
