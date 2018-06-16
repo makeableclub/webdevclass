@@ -1,8 +1,8 @@
-function drawLine(x, y, w, h) {
+function drawLine(x, y, x2, y2) {
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
     ctx.moveTo(x, y);
-    ctx.lineTo(w, h);
+    ctx.lineTo(x2, y2);
     ctx.stroke();
 }
 
