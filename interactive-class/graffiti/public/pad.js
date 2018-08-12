@@ -16,6 +16,9 @@
   var isDrawingSelected = false;
   // mouse or touch is pressedDown
   var isPressedDown = false;
+  // Temporary input box id
+  var divBoxId = "temp-box-id-1011";
+
 
   // change drawing pen color
   var colors = document.getElementsByClassName('color');
@@ -44,14 +47,26 @@
           break;
 
           case "write":
-            var response = prompt("Text Input", "pls write sth");
+            var response = prompt("Text Input", "please write something");
+
+            if (!response || response.trim()=="") {
+                console.log("no input text: " + response);
+                return;
+            }
+
             console.log("sending text: " + response);
 
             socket.emit('writing',{
                 content: response
             });
             break;
-            
+
+        case "input":
+            createInputbox();
+            // make this element to be draggable
+            dragElement(document.getElementById(divBoxId));
+            break;
+
           case "clear":
             socket.emit('clearing', {
                 target: 'canvas'
@@ -175,5 +190,57 @@
 
   // document.body.requestFullscreen();
   document.ontouchmove = function(e){ e.preventDefault(); }
+
+  // function to create an input box
+  function createInputbox() {
+      var boxDiv = document.createElement('div');
+
+      // var label = "<svg><circle cx=10 cy=10 r=10 fill='#AAAA00'/></svg>"
+      // cursor.innerHTML = '<div style="width:20px; line-height:20px; color:' + client.color
+      //           + '; font-size: 19px; font-weight:bold; text-align:center; vertical-align:middle;">' + label + '</div>';
+
+      boxDiv.innerHTML = "<input autofocus type='text' id='msg-input'/><button id='send-msg-button' type='button'>Send</button>";
+      boxDiv.style.height = '60px';
+      boxDiv.style.width = '400px';
+      boxDiv.style.left = '100px';
+      boxDiv.style.top = '100px';
+      boxDiv.style.position = 'absolute';
+      boxDiv.style.zIndex = 999;
+      boxDiv.id = divBoxId;
+
+      document.body.appendChild(boxDiv);
+
+      console.log("Made an input box with id: " + boxDiv.id);
+  }
+
+  // event delegation for the dynamically created button
+  // Upon message input, send it out to wall, and remove the input box
+  document.addEventListener('click',function(e){
+      if(e.target && e.target.id == 'send-msg-button'){
+          var msgElement = document.getElementById('msg-input');
+          var message = msgElement.value;
+
+          if (!message || message.trim()=="") {
+              console.log("no input text: " + message);
+              return;
+          }
+
+          console.log("sending text: " + message);
+          var rect = msgElement.getBoundingClientRect();
+          var w = canvas.width;
+          var h = canvas.height;
+
+          socket.emit('writing',{
+              content: message,
+              x: rect.left / w,
+              y: rect.top / h
+          });
+
+
+          // remove the input boxDiv
+          var boxDiv = document.getElementById(divBoxId);
+          boxDiv.parentNode.removeChild(boxDiv);
+      }
+  });
 
 })();

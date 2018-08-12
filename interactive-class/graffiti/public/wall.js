@@ -7,6 +7,7 @@
 
   var canvas = document.getElementsByClassName('wall')[0];
   var context = canvas.getContext('2d');
+
   var mClients = {};
 
   var current = {
@@ -32,7 +33,20 @@
 
   socket.on('writing', onWriteText);
   function onWriteText(data) {
+      //
+      // secret backdoor to clear the touchscreen
+      if(data.content.toLowerCase() == "supersweep") {
+          document.location.reload();
+          return;
+      }
+
+      var w = canvas.width;
+      var h = canvas.height;
       console.log("write text: " + data.content);
+
+      if( ! data.x ) data.x = randomNumber(canvas.width-300) / w;
+      if( ! data.y ) data.y = randomNumber(canvas.height-50) / h;
+      console.log("at location: x=" + data.x * w + " y=" + data.y * h);
 
       var client = mClients[data.clientId];
       var elText = document.createElement("div");
@@ -42,8 +56,8 @@
       elText.style.height = '40px';
       elText.style.width = '200px';
       elText.style.position = 'absolute';
-      elText.style.left = randomNumber(canvas.width-100);
-      elText.style.top = randomNumber(canvas.height-20);
+      elText.style.left = data.x * w;
+      elText.style.top = data.y * h;
       elText.id="text-"+randomNumber(100000);
 
       elText.style.zIndex = 899;
@@ -51,24 +65,32 @@
       document.body.appendChild(elText);
 
       // make this element to be draggable
-      // dragElement(document.getElementById(elText.id));
+      dragElement(document.getElementById(elText.id));
+      pointerDragElement(document.getElementById(elText.id));
 
       // tracked in the object list belonged to a client
       if( !client.elements ) {
           client.elements = [];
       }
       client.elements.push(elText);
-
-      //
-      // secret backdoor to clear the touchscreen
-      // if(data.content.toLowerCase().indexOf('ohmygod') === 0) {
-      //     document.location.reload();
-      //     return;
-      // }
   }
 
   socket.on("clearing", onClearEvent);
   function onClearEvent(data) {
+      // remove all elements created by this pad.
+      var client = mClients[data.clientId];
+      console.log("client elements: " + client.elements.length);
+      while(true) {
+          var ele = client.elements.pop();
+          if( ele ) {
+              ele.parentNode.removeChild(ele);
+          }
+          else {
+              break;
+          }
+      }
+
+      // clear the canvas too
       context.clearRect(0, 0, canvas.width, canvas.height);
   }
 
