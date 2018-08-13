@@ -7,7 +7,18 @@ var port = process.env.PORT || 3001;
 var wallSockets = [];
 
 app.use(express.static(__dirname + '/public'));
+// or using routes
+app.get('/wall', function(req,res){
+ res.sendfile(__dirname + '/public/wall.html');
+});
+app.get('/pad', function(req,res){
+ res.sendfile(__dirname + '/public/pad.html');
+});
+app.get('/', function(req,res){
+ res.sendfile(__dirname + '/public/index.html');
+});
 
+// socket.io communication
 io.on('connection', (socket) => {
     console.log("someone connected");
 
