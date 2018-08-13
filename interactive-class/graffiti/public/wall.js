@@ -48,7 +48,6 @@
       if( ! data.y ) data.y = randomNumber(canvas.height-50) / h;
       console.log("at location: x=" + data.x * w + " y=" + data.y * h);
 
-      var client = mClients[data.clientId];
       var elText = document.createElement("div");
       elText.innerHTML = '<text color:"red";font-size: 32px; font-weight:bold; text-align:center; vertical-align:middle;">' + data.content + '</text>';
       // elText.innerHTML = '<p class="text">' + data.content + '</p>';
@@ -69,6 +68,7 @@
       pointerDragElement(document.getElementById(elText.id));
 
       // tracked in the object list belonged to a client
+      var client = mClients[data.clientId];
       if( !client.elements ) {
           client.elements = [];
       }
@@ -91,7 +91,7 @@
       }
 
       // clear the canvas too
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      // context.clearRect(0, 0, canvas.width, canvas.height);
   }
 
   // a new "pad" client joined
